@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://nu7ojcs85584"]
+[gd_scene load_steps=26 format=3 uid="uid://nu7ojcs85584"]
 
 [ext_resource type="Script" uid="uid://b7ftosj2glyuc" path="res://player.gd" id="1_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://c460jqhxyjumw" path="res://art/playerGrey_up1.png" id="1_onrkg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c5sy35dajn128" path="res://art/playerGrey_walk1.png" id="4_sweqy"]
 [ext_resource type="Texture2D" uid="uid://cffyeargb8awc" path="res://art/playerGrey_walk2.png" id="5_2hs0m"]
 [ext_resource type="Texture2D" uid="uid://7gjyratpccb1" path="res://art/camilo.jpg" id="7_1jxqw"]
+[ext_resource type="AudioStream" uid="uid://csxnhl3xt65ny" path="res://art/gameover.wav" id="8_dw050"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jxqw"]
 atlas = ExtResource("2_2hs0m")
@@ -130,21 +131,6 @@ height = 16.2
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1jxqw"]
 blend_mode = 3
 
-[sub_resource type="Animation" id="Animation_1jxqw"]
-resource_name = "atacar"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Espada:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.6595344, 1.7453293, 0.6597344]
-}
-
 [sub_resource type="Animation" id="Animation_dw050"]
 length = 0.001
 tracks/0/type = "value"
@@ -160,26 +146,46 @@ tracks/0/keys = {
 "values": [0.6595344]
 }
 
+[sub_resource type="Animation" id="Animation_1jxqw"]
+resource_name = "atacar"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Espada:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.6595344, 1.7453293, 0.6597344]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b26j0"]
 _data = {
 &"RESET": SubResource("Animation_dw050"),
 &"atacar": SubResource("Animation_1jxqw")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dw050"]
+radius = 5.0
+height = 18.0
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 floor_snap_length = 0.1
-safe_margin = 0.001
+safe_margin = 0.5
 script = ExtResource("1_i3pqv")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -0.7)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_1jxqw")
 animation = &"player2"
 frame_progress = 0.2896553
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(1.1, 0.8)
 shape = SubResource("CapsuleShape2D_2hs0m")
 
 [node name="Espada" type="Sprite2D" parent="."]
@@ -196,3 +202,17 @@ region_filter_clip_enabled = true
 libraries = {
 &"": SubResource("AnimationLibrary_b26j0")
 }
+
+[node name="DetectorDañó" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectorDañó"]
+position = Vector2(0, 1.3)
+scale = Vector2(1, 0.9)
+shape = SubResource("CapsuleShape2D_dw050")
+
+[node name="SonidoMuerte" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_dw050")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="body_entered" from="DetectorDañó" to="." method="_on_detector_dañó_body_entered"]

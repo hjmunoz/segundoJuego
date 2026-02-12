@@ -9,7 +9,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# 2. Salto (Flecha arriba)
-	if Input.is_action_just_pressed("ui_up") and is_on_floor():
+	if Input.is_action_just_pressed("move_up") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# 3. Ataque (Espacio)
@@ -35,3 +35,26 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.stop()
 
 	move_and_slide()
+
+
+func _on_detector_dañó_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Villanos"):
+		# 1. Iniciamos el sonido de inmediato
+		$SonidoMuerte.play()
+		
+		# 2. En lugar de borrar el nodo, lo hacemos invisible
+		# Esto hace que ante tus ojos el PJ "desaparezca" al segundo 0
+		visible = false 
+		
+		# 3. Desactivamos sus colisiones para que no lo sigan golpeando 
+		# mientras el sonido termina de sonar
+		$CollisionShape2D.set_deferred("disabled", true)
+		
+		# 4. Detenemos su movimiento para que no se escuche que sigue caminando
+		set_physics_process(false)
+		
+		# 5. Esperamos a que el sonido termine de sonar en la oscuridad
+		await $SonidoMuerte.finished 
+		
+		# 6. Ahora que el sonido acabó, lo borramos de verdad
+		queue_free()

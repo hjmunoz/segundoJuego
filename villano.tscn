@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://5cwdcie2oj7c"]
+
+[ext_resource type="Script" uid="uid://b3u5cp7fubm0t" path="res://villano.gd" id="1_04n2k"]
+[ext_resource type="Texture2D" uid="uid://y67iv3g1tac2" path="res://art/Gemini_Generated_Image_jpwfh3jpwfh3jpwf.png" id="2_ekq3y"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_moxti"]
+blend_mode = 3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bnx68"]
+blend_mode = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4wtd"]
+atlas = ExtResource("2_ekq3y")
+region = Rect2(0, 0, 544, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51xa1"]
+atlas = ExtResource("2_ekq3y")
+region = Rect2(544, 0, 544, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sicrb"]
+atlas = ExtResource("2_ekq3y")
+region = Rect2(0, 480, 544, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkedi"]
+atlas = ExtResource("2_ekq3y")
+region = Rect2(544, 480, 544, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j8qs0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4wtd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51xa1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sicrb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lkedi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a5tj2"]
+size = Vector2(32, 41)
+
+[node name="Villano" type="CharacterBody2D" groups=["Villanos"]]
+material = SubResource("CanvasItemMaterial_moxti")
+safe_margin = 0.5
+script = ExtResource("1_04n2k")
+
+[node name="CaminarVillano" type="AnimatedSprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_bnx68")
+position = Vector2(1.9073486e-06, -1.9073486e-06)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_j8qs0")
+frame_progress = 0.54343027
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 0.9)
+shape = SubResource("RectangleShape2D_a5tj2")
+
+[node name="RayCastAbajo" type="RayCast2D" parent="."]
+position = Vector2(16, 16)
+target_position = Vector2(0, 24)
+
+[node name="RayoFrente" type="RayCast2D" parent="."]
+target_position = Vector2(30, 0)
+collision_mask = 3

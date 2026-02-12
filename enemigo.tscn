@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://dxmb8u0o4cbr7"]
+
+[ext_resource type="Script" uid="uid://cnsarnkyw1vl3" path="res://enemigo.gd" id="1_a5tj2"]
+[ext_resource type="Texture2D" uid="uid://7gjyratpccb1" path="res://art/camilo.jpg" id="1_becj5"]
+[ext_resource type="Texture2D" uid="uid://bgdwg4ky7xgdi" path="res://art/villano.png" id="3_moxti"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_moxti"]
+blend_mode = 3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bnx68"]
+blend_mode = 3
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnx68"]
+atlas = ExtResource("1_becj5")
+region = Rect2(498, 682, 249, 341)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a5tj2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnx68")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_moxti")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a5tj2"]
+size = Vector2(34, 31.5)
+
+[node name="Enemigo" type="CharacterBody2D" groups=["Villanos"]]
+material = SubResource("CanvasItemMaterial_moxti")
+script = ExtResource("1_a5tj2")
+
+[node name="CaminarVillano1" type="AnimatedSprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_bnx68")
+position = Vector2(1.1368684e-13, -1.1368684e-13)
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_a5tj2")
+frame_progress = 0.36683983
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.25)
+shape = SubResource("RectangleShape2D_a5tj2")
+
+[node name="RayCastAbajo" type="RayCast2D" parent="."]
+position = Vector2(16, 15)
+target_position = Vector2(0, 24)
+
+[node name="RayoFrente" type="RayCast2D" parent="."]
+target_position = Vector2(30, 0)
+collision_mask = 3
