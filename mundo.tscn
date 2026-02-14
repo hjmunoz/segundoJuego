@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1n18vo1e2df5"]
+[gd_scene load_steps=14 format=3 uid="uid://c1n18vo1e2df5"]
 
 [ext_resource type="Texture2D" uid="uid://dcwspg05u3bcm" path="res://art/Gemini_Generated_Image_h4rxxoh4rxxoh4rx.png" id="1_5ckkb"]
 [ext_resource type="PackedScene" uid="uid://nu7ojcs85584" path="res://player.tscn" id="1_6ba58"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dxmb8u0o4cbr7" path="res://enemigo.tscn" id="4_otwa2"]
 [ext_resource type="PackedScene" uid="uid://5cwdcie2oj7c" path="res://villano.tscn" id="5_aou4a"]
 [ext_resource type="AudioStream" uid="uid://b1pw5nqd2yru3" path="res://art/House In a Forest Loop.ogg" id="7_2hh7m"]
+[ext_resource type="Script" uid="uid://k7allnudh6xg" path="res://generador_enemigos.gd" id="9_pfhxm"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pfhxm"]
 
@@ -182,3 +183,13 @@ motion_mirroring = Vector2(2048, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 scale = Vector2(2.5, 1)
 texture = ExtResource("1_5ckkb")
+
+[node name="GeneradorEnemigos" type="Node2D" parent="."]
+script = ExtResource("9_pfhxm")
+enemigo_escena = ExtResource("4_otwa2")
+
+[node name="Timer" type="Timer" parent="GeneradorEnemigos"]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="GeneradorEnemigos/Timer" to="GeneradorEnemigos" method="_on_timer_timeout"]
