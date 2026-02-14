@@ -46,7 +46,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a5tj2"]
-size = Vector2(32, 41)
+size = Vector2(86, 97.77779)
 
 [node name="Villano" type="CharacterBody2D" groups=["Villanos"]]
 material = SubResource("CanvasItemMaterial_moxti")
@@ -55,19 +55,21 @@ script = ExtResource("1_04n2k")
 
 [node name="CaminarVillano" type="AnimatedSprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_bnx68")
-position = Vector2(1.9073486e-06, -1.9073486e-06)
-scale = Vector2(0.1, 0.1)
+position = Vector2(0, -44)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_j8qs0")
 frame_progress = 0.54343027
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, -44)
 scale = Vector2(1, 0.9)
 shape = SubResource("RectangleShape2D_a5tj2")
 
 [node name="RayCastAbajo" type="RayCast2D" parent="."]
-position = Vector2(16, 16)
+position = Vector2(39.435, 0)
 target_position = Vector2(0, 24)
 
 [node name="RayoFrente" type="RayCast2D" parent="."]
+position = Vector2(39.86, -64)
 target_position = Vector2(30, 0)
 collision_mask = 3

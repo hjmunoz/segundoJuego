@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://clgkg648xlsy4"]
+
+[ext_resource type="Texture2D" uid="uid://7gjyratpccb1" path="res://art/camilo.jpg" id="1_gknpl"]
+[ext_resource type="Script" uid="uid://cpv2ae1mxg11q" path="res://daga.gd" id="1_rd2om"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rd2om"]
+blend_mode = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rd2om"]
+size = Vector2(48, 18.65)
+
+[node name="Daga" type="Area2D"]
+script = ExtResource("1_rd2om")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_rd2om")
+rotation = 1.5707964
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_gknpl")
+region_enabled = true
+region_rect = Rect2(316.5, 433.5, 73, 149)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.01)
+scale = Vector2(0.915, 1.17)
+shape = SubResource("RectangleShape2D_rd2om")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
